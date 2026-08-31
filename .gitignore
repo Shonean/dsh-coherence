@@ -1,0 +1,7 @@
+node_modules/
+lib/
+.dsh-build/
+coverage/
+*.tsbuildinfo
+*.log
+.DS_Store

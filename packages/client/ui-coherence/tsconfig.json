@@ -1,0 +1,11 @@
+{
+  // All @deepseek-ai/* and framework-fork deps resolve from node_modules
+  // (npm-pinned builds ship lib/types); there are no in-repo source project
+  // references, unlike the upstream monorepo layout this package came from.
+  "extends": "../../../tsconfig.base.client.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "lib/types"
+  },
+  "include": ["src"]
+}

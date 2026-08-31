@@ -1,0 +1,7 @@
+{
+  "files": [],
+  "references": [
+    { "path": "packages/typert/generator" },
+    { "path": "packages/plugin/coherence" }
+  ]
+}

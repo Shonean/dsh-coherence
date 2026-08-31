@@ -1,0 +1,28 @@
+{
+  "name": "@deepseek-ai/dsh-typert-generator",
+  "description": "TypeScript project analyzer and model-driven Typert artifact generator (vendored build tool, never published)",
+  "version": "0.1.1-rc.2",
+  "private": true,
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./tsdown": {
+      "types": "./lib/types/tsdown-plugin.d.ts",
+      "default": "./lib/types/tsdown-plugin.js"
+    }
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@jridgewell/gen-mapping": "^0.3.13",
+    "typescript": "^6.0.3"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "4.0.2",
+    "@deepseek-ai/dsh-invariants": "0.1.1-rc.2"
+  }
+}

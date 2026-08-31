@@ -1,0 +1,13 @@
+packages:
+  - packages/*/*
+
+linkWorkspacePackages: true
+
+peerDependencyRules:
+  allowedVersions:
+    typescript: '>=5 <7'
+
+# pnpm 10+ blocks dependency install scripts unless reviewed. tsdown's esbuild
+# binary is the only one this workspace needs.
+allowBuilds:
+  esbuild: true

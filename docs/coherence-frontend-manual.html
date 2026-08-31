@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coherence 前端手册</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --paper: #faf8f7;
+  --ink: #241f26;
+  --muted: #736a76;
+  --line: #e6dde2;
+  --accent: #d6246e;
+  --accent-soft: #fbe7f0;
+  --card: #ffffff;
+  --code-bg: #f2ecef;
+  --dot-ok: #3d8f5f;
+  --dot-idle: #b9b2bc;
+  --dot-run: #3f6fd8;
+  --warn: #8a6a1f;
+  --warn-soft: #f6edd8;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #1b161c;
+    --ink: #ece4ec;
+    --muted: #a298a6;
+    --line: #372d3a;
+    --accent: #ff7ebf;
+    --accent-soft: #3a1f2e;
+    --card: #241d28;
+    --code-bg: #29202e;
+    --dot-ok: #6cc493;
+    --dot-idle: #5c5260;
+    --dot-run: #7fa4ea;
+    --warn: #d4b05e;
+    --warn-soft: #3a3222;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #1b161c;
+  --ink: #ece4ec;
+  --muted: #a298a6;
+  --line: #372d3a;
+  --accent: #ff7ebf;
+  --accent-soft: #3a1f2e;
+  --card: #241d28;
+  --code-bg: #29202e;
+  --dot-ok: #6cc493;
+  --dot-idle: #5c5260;
+  --dot-run: #7fa4ea;
+  --warn: #d4b05e;
+  --warn-soft: #3a3222;
+}
+
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  font-size: 15.5px;
+  line-height: 1.75;
+}
+
+.wrap {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 68ch);
+  justify-content: center;
+  gap: 56px;
+  padding: 0 32px;
+}
+
+/* ---------- TOC rail ---------- */
+nav.toc {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  padding-top: 96px;
+  font-size: 13px;
+  overflow-y: auto;
+}
+nav.toc .toc-label {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+nav.toc a {
+  display: block;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 4px 0 4px 14px;
+  border-left: 2px solid var(--line);
+  line-height: 1.5;
+}
+nav.toc a:hover { color: var(--ink); }
+@media (max-width: 900px) {
+  .wrap { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  nav.toc { display: none; }
+}
+
+/* ---------- masthead ---------- */
+header.mast { padding: 88px 0 40px; }
+header.mast .eyebrow {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 18px;
+}
+header.mast h1 {
+  font-family: "Noto Serif SC", serif;
+  font-weight: 700;
+  font-size: clamp(34px, 5vw, 46px);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+header.mast .lede { margin-top: 18px; color: var(--muted); max-width: 56ch; }
+header.mast .meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin-top: 26px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ---------- sections ---------- */
+section { padding: 44px 0 8px; border-top: 1px solid var(--line); }
+section:first-of-type { border-top: none; }
+h2 {
+  font-family: "Noto Serif SC", serif;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1.35;
+  text-wrap: balance;
+  margin: 18px 0 6px;
+}
+h2 .no {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent);
+  display: block;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 34px 0 10px;
+}
+p { margin: 12px 0; max-width: 66ch; }
+ul.plain { margin: 10px 0; padding-left: 22px; }
+ul.plain li { margin: 5px 0; }
+strong { font-weight: 700; }
+
+a { color: var(--accent); }
+
+code, .mono {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.86em;
+}
+code {
+  background: var(--code-bg);
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+
+/* UI chip: 原样还原界面上的按钮/页签名 */
+.chip {
+  display: inline-block;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 5px;
+  padding: 1px 8px;
+  font-size: 0.84em;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* path / port line */
+.path {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  background: var(--code-bg);
+  border-radius: 6px;
+  padding: 9px 14px;
+  margin: 10px 0;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+/* tables */
+.tbl-wrap { overflow-x: auto; margin: 14px 0; }
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 12px; letter-spacing: 0.08em; color: var(--muted); font-weight: 500; }
+td code { white-space: nowrap; }
+
+/* callouts */
+.note {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  background: var(--card);
+  padding: 12px 16px;
+  margin: 16px 0;
+  font-size: 14.5px;
+}
+.note.warn { border-left-color: var(--warn); }
+.note .t { font-weight: 700; margin-right: 6px; }
+
+/* memory stack diagram */
+.stack { margin: 20px 0 6px; display: grid; gap: 6px; max-width: 560px; }
+.layer {
+  display: grid;
+  grid-template-columns: 118px 1fr;
+  gap: 14px;
+  align-items: baseline;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+.layer .name {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent);
+}
+.layer .desc { font-size: 14px; color: var(--ink); }
+.layer .desc small { display: block; color: var(--muted); font-size: 12.5px; }
+.flow {
+  font-size: 12.5px;
+  color: var(--muted);
+  padding: 0 16px 0 132px;
+  font-family: "JetBrains Mono", monospace;
+}
+
+/* ingest cards mock */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin: 16px 0; max-width: 640px; }
+.mockcard {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--card);
+  padding: 10px 12px;
+  font-size: 13.5px;
+}
+.mockcard .head { display: flex; align-items: center; gap: 8px; font-weight: 700; }
+.mockcard .meta { color: var(--muted); font-size: 12.5px; margin-top: 3px; }
+.dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; flex: none; }
+.dot.ok { background: var(--dot-ok); }
+.dot.idle { background: var(--dot-idle); }
+.dot.run { background: var(--dot-run); }
+
+/* state legend */
+.state { font-family: "JetBrains Mono", monospace; font-size: 12.5px; }
+
+footer {
+  border-top: 1px solid var(--line);
+  margin-top: 56px;
+  padding: 26px 0 64px;
+  color: var(--muted);
+  font-size: 13px;
+}
+footer .mono { font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="toc" aria-label="目录">
+  <div class="toc-label">COHERENCE</div>
+  <a href="#overview">总览</a>
+  <a href="#open">打开 Coherence 页签</a>
+  <a href="#agents">Agents 分区</a>
+  <a href="#memory">Memory 分区</a>
+  <a href="#card">会话里的委派卡片</a>
+  <a href="#packages">插件包页签</a>
+  <a href="#bridge">外部 agent 通道</a>
+  <a href="#config">配置速查</a>
+  <a href="#faq">疑难解答</a>
+</nav>
+
+<main>
+
+<header class="mast">
+  <div class="eyebrow">DSH · COHERENCE</div>
+  <h1>Coherence 前端手册</h1>
+  <p class="lede">Coherence 是 dsh 的多 agent 协作与记忆套件：转录摄取、三层记忆、代码库地图、共享工作日志，以及一个把这一切暴露给外部 agent 的 MCP 桥。本手册讲它的三个前端表面——Coherence 页签、会话里的委派卡片、插件包页签——怎么读、怎么点、出了问题怎么查。</p>
+  <div class="meta">
+    <span>版本 0.1.1-rc.2</span>
+    <span>界面 DSH Desktop / 内嵌 SPA</span>
+    <span>更新 2026-08-31</span>
+  </div>
+</header>
+
+<!-- ================= 总览 ================= -->
+<section id="overview">
+  <h2><span class="no">00</span>总览：三个表面，一份数据</h2>
+  <p>所有表面读的是同一份存储。你在 Hub 里看到的接入状态，就是 MCP 桥喂给外部 agent 的同一批转录；插件包页签停用的，也是同一条链路。知道这一点，查问题时就不会迷路。</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>表面</th><th>位置</th><th>管什么</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Coherence 页签</strong></td><td>会话顶部页签环（对话 · 轨迹 · Coherence）</td><td>外部 agent 接入状态、子 agent 血缘、三层记忆浏览与检索</td></tr>
+      <tr><td><strong>委派卡片</strong></td><td>消息流里每次子 agent 委派一行</td><td>单次委派的生命周期、提示词与结果</td></tr>
+      <tr><td><strong>插件包页签</strong></td><td>设置 → 插件 → 插件包</td><td>按包分组查看插件、停用/启用整个 coherence 家族</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ================= 打开 ================= -->
+<section id="open">
+  <h2><span class="no">01</span>打开 Coherence 页签</h2>
+  <p>打开（或新建）一个会话，发过第一条消息之后，会话标题下方会出现页签环：</p>
+  <p class="path">[ 对话 ] [ 轨迹 ] [ Coherence ]</p>
+  <p>点 <span class="chip">Coherence</span> 进入。整个视图不依赖某条会话——记忆和接入状态是跨会话的全局数据——但页签本身挂在有内容的会话里。</p>
+  <div class="note warn"><span class="t">注意</span>刚新建的空白会话不会显示页签环，这是所有会话视图的统一行为；发一条消息（或切到有历史的会话）就会出现。</div>
+</section>
+
+<!-- ================= Agents ================= -->
+<section id="agents">
+  <h2><span class="no">02</span>Agents 分区</h2>
+
+  <h3>外部 agent 接入</h3>
+  <p>四张卡对应四个受管 agent 类型。每张卡显示两件事：累计摄取的消息量，和最近一次活跃时间。</p>
+  <div class="cards">
+    <div class="mockcard"><div class="head"><span class="dot ok"></span>Claude Code</div><div class="meta">9798 条消息 · 最近活跃 10:11</div></div>
+    <div class="mockcard"><div class="head"><span class="dot idle"></span>主 agent</div><div class="meta">0 条消息 · 无记录</div></div>
+    <div class="mockcard"><div class="head"><span class="dot idle"></span>opencode</div><div class="meta">0 条消息 · 无记录</div></div>
+    <div class="mockcard"><div class="head"><span class="dot idle"></span>codex</div><div class="meta">0 条消息 · 无记录</div></div>
+  </div>
+  <ul class="plain">
+    <li><span class="dot ok" style="vertical-align:-1px"></span>&nbsp;绿点 = 该来源已有数据入库；<span class="dot idle" style="vertical-align:-1px"></span>&nbsp;灰点 = 还没有记录。</li>
+    <li>Claude Code 的数据来自 <code>~/.claude/projects</code> 的增量轮询，<strong>不要求会话由 dsh 启动</strong>——你直接跑的 claude code 也会被摄取。</li>
+    <li>数据按轮询间隔刷新（默认 60 秒），不是推送。</li>
+  </ul>
+  <div class="note"><span class="t">「主 agent」是谁？</span>就是你在 DSH 对话框里直接对话的那个 dsh agent 自己。它的会话存在 dsh 自己的会话系统里，<strong>不经过转录摄取</strong>（摄取连接器只轮询外部工具的存储），所以它的卡显示「无记录」是设计使然。换个说法：对话框是主 agent 的嘴，接入卡看的是「外面的」agent。</div>
+
+  <h3>子 agent 血缘</h3>
+  <p>列出客户端当前掌握的子 agent 会话：</p>
+  <ul class="plain">
+    <li><span class="dot run" style="vertical-align:-1px"></span>&nbsp;蓝点 = 正在运行；<span class="dot idle" style="vertical-align:-1px"></span>&nbsp;灰点 = 已结束。</li>
+    <li>点 <span class="chip">打开</span> 直接跳进该子会话的完整对话。</li>
+    <li>这里的血缘来自实时会话目录；历史委派的持久记录看第 04 节的卡片。</li>
+  </ul>
+</section>
+
+<!-- ================= Memory ================= -->
+<section id="memory">
+  <h2><span class="no">03</span>Memory 分区</h2>
+
+  <p>三层记忆沿用了 CLS 的思路——记忆是会被改写的，不是只增不减的日志。三层各司其职：</p>
+
+  <div class="stack" role="img" aria-label="三层记忆：working 接收即时捕获，episodic 存会话蒸馏，semantic 存巩固后的断言；episodic 经巩固作业提升为 semantic">
+    <div class="layer"><span class="name">working</span><span class="desc">工作记忆<small>当前会话的事实、观察、决定、待办</small></span></div>
+    <div class="layer"><span class="name">episodic</span><span class="desc">情节记忆<small>一次会话/子 agent 运行蒸馏出的一段经历</small></span></div>
+    <div class="layer"><span class="name">semantic</span><span class="desc">语义记忆<small>巩固出的长期断言，带主题与置信度</small></span></div>
+  </div>
+  <p class="flow">episodic ──巩固作业──▶ semantic</p>
+
+  <h3>三层各自记什么、谁来写</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>层</th><th>典型内容</th><th>谁写入</th><th>生命周期</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="state">working</span></td>
+        <td>四类条目：事实 / 观察 / 决定 / 待办</td>
+        <td>agent 的 <code>memory_write</code> 工具、外部 agent 经 MCP、摄取时的 <code>feedMemory</code> 开关</td>
+        <td>会话级——最活跃也最短命，随时被更新的条目改写</td>
+      </tr>
+      <tr>
+        <td><span class="state">episodic</span></td>
+        <td>一段经历：摘要 + 带时间戳的事件序列（用户/助手/工具/决策）+ 起止时间</td>
+        <td>会话或子 agent 运行结束时蒸馏生成</td>
+        <td>沉淀留存，是巩固作业的原料</td>
+      </tr>
+      <tr>
+        <td><span class="state">semantic</span></td>
+        <td>断言：主题 + 论断 + 置信度 + 证据来源计数</td>
+        <td>巩固作业从情节层提炼；也可直接写入</td>
+        <td>长期。同主题新断言会推翻旧的（见下）</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <h3>记忆会被改写：四种状态</h3>
+  <p>CLS 的核心观察是「回忆即重写」。这里没有删除——被取代的记录只是标记状态，并用 <code>supersededBy</code> 指向取代它的那条，历史永远可追溯：</p>
+  <ul class="plain">
+    <li><strong>有效（active）</strong>——当前可信；检索默认只返回这一类。</li>
+    <li><strong>已过时（outdated）</strong>——被新条目取代（新知识覆盖旧知识）。</li>
+    <li><strong>已矛盾（contradicted）</strong>——同主题来了一个冲突的语义断言：旧断言标「已矛盾」，新断言以「待定」身份入库，直到被再次证实。</li>
+    <li><strong>待定（tentative）</strong>——新写入、尚未证实的断言。</li>
+  </ul>
+
+  <h3>巩固作业：情节如何变成语义</h3>
+  <p>后台定时巩固（默认每小时检查一次）：情节层条目数超过阈值（默认 20）时，把每条有效情节蒸馏成语义断言——主题取来源 agent，置信度随证据积累，同一主题的重复断言合并（证据计数 +1）。也可以随时用 <code>memory_consolidate</code> 手动触发。</p>
+
+  <h3>读这个列表</h3>
+  <p>顶部四个过滤页签（全部/工作/情节/语义）带实时计数。每条记录一行：</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>元素</th><th>含义</th></tr></thead>
+    <tbody>
+      <tr><td><span class="chip">情节</span></td><td>所在层</td></tr>
+      <tr><td><span class="state">有效 / 已过时 / 已矛盾 / 待定</span></td><td>状态机。被更新换代或互相冲突的旧记录不会被删掉，只是标记出来，历史可追溯</td></tr>
+      <tr><td><span class="state">主 agent · Claude Code …</span></td><td>这条记忆是谁写下的</td></tr>
+      <tr><td><span class="state">强度 0.80</span></td><td>工作/情节层是重要度，语义层是置信度（0–1）</td></tr>
+      <tr><td>正文下的小标签</td><td>自由标签</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>语义检索</h3>
+  <p>输入关键词点 <span class="chip">检索</span>，走的是记忆服务的预算排序器：按相关度打分，按三层各自的预算配额截断，只返回「有效」状态的记录（已过时/已矛盾的默认不参与）。</p>
+
+  <div class="note"><span class="t">说明</span>当前版本读取的是默认（legacy）工作区分片——和 MCP 工具的默认范围一致。如果你在多工作区隔离的场景下写入了其他分片，这里的计数不会包含它们；按工作区切换在路线图上。</div>
+
+  <h3>还没开放的分区</h3>
+  <p><span class="chip">后续</span> 页签是声明过的占位：代码库地图、工作日志、跨 agent 转录搜索会以同样的方式进来，数据侧（服务与存储）已经就绪。</p>
+</section>
+
+<!-- ================= 委派卡片 ================= -->
+<section id="card">
+  <h2><span class="no">04</span>会话里的委派卡片</h2>
+  <p>主 agent 每次委派子 agent，消息流里落一行卡片。状态只从持久化的调用/结果推导——回放历史会话时状态不会变，哪怕实时目录早就翻篇了。</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>状态</th><th>长什么样</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td><span class="state">running</span></td><td>标题带扫光动画</td><td>子 agent 正在跑</td></tr>
+      <tr><td><span class="state">ok</span></td><td>模型自拟的 3–5 词任务标签</td><td>正常结束</td></tr>
+      <tr><td><span class="state">error</span></td><td>首行错误信息替换标签</td><td>运行失败</td></tr>
+      <tr><td><span class="state">stopped</span></td><td>警告态</td><td>被中止</td></tr>
+    </tbody>
+  </table></div>
+  <ul class="plain">
+    <li>后台运行（<code>run_in_background: true</code>）的委派带 <span class="chip">后台</span> 徽标。</li>
+    <li>整行可展开（回车/空格也可以），展开后是<strong>原样</strong>的委派提示词和结果文本。</li>
+    <li>卡片右侧的 <span class="chip">Inspect</span> 进入轨迹检查器，看这次调用的耗时与用量。</li>
+  </ul>
+</section>
+
+<!-- ================= 插件包页签 ================= -->
+<section id="packages">
+  <h2><span class="no">05</span>插件包页签：启停整个家族</h2>
+  <p>路径：设置 → 插件 → <span class="chip">插件包</span>。这里把当前加载的插件按包分组，coherence 家族（<code>coherence</code> + 三个浏览器半）聚在一组，组头一个开关。</p>
+  <ul class="plain">
+    <li><strong>停用是原地生效的</strong>：Loader 运行时卸载，内核不重启；成功后整页刷新，你会看到前端退回原生形态（Coherence 页签消失、委派卡片退回通用渲染、MCP 3140 下线）。</li>
+    <li>状态持久化在 <code>~/.dsh/cordis.patch.yml</code>，重启后依然生效。</li>
+    <li>再启用同样原地完成，一切恢复。</li>
+  </ul>
+  <div class="note"><span class="t">设计保证</span>插件包页签本身（<code>ui-coherence-inventory</code>）永远不可被停用——它是你重新启用一切的那把钥匙。</div>
+</section>
+
+<!-- ================= 外部通道 ================= -->
+<section id="bridge">
+  <h2><span class="no">06</span>外部 agent 通道</h2>
+  <p>前端之外的三个读数入口，给 MCP 客户端和人类：</p>
+  <ul class="plain">
+    <li><strong>MCP 桥</strong>（<code>features.mcpServer</code>）：streamable-http，默认地址——</li>
+  </ul>
+  <p class="path">http://127.0.0.1:3140/mcp</p>
+  <ul class="plain">
+    <li>十二个工具：<code>memory_write / recall / forget / status / consolidate</code>、<code>codebase_map_save / get / list</code>、<code>worklog_get_direction / update_direction / log / list</code>。</li>
+    <li><strong>文件镜像</strong>：<code>~/.dsh/mirror/</code> 下的 <code>DIRECTION.md</code>、<code>memory-*.md</code>、<code>codebase-map.md</code> 等，人类可读。</li>
+    <li>MCP 与前端是并列的两条读路，写进去的数据（比如经 MCP 写的一条记忆）刷新 Hub 后立刻可见。</li>
+  </ul>
+</section>
+
+<!-- ================= 配置 ================= -->
+<section id="config">
+  <h2><span class="no">07</span>配置速查</h2>
+  <p>都在 <code>cordis.patch.yml</code> 的 <code>config</code> 下，全部有默认值，不写即用。</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>键</th><th>默认</th><th>管什么</th></tr></thead>
+    <tbody>
+      <tr><td><code>features.memory</code></td><td>开</td><td>三层记忆 + 检索</td></tr>
+      <tr><td><code>features.transcript</code></td><td>开</td><td>外部 agent 转录摄取</td></tr>
+      <tr><td><code>features.ingestClaude</code></td><td>开</td><td>轮询 ~/.claude/projects</td></tr>
+      <tr><td><code>features.ingestOpencode</code> / <code>ingestCodex</code></td><td>关</td><td>轮询 opencode.db / codex sqlite</td></tr>
+      <tr><td><code>features.mcpServer</code></td><td>关</td><td>外部 agent 的 MCP 桥（3140）</td></tr>
+      <tr><td><code>features.webGateway</code></td><td>开</td><td>Coherence 页签的只读数据通道。关掉它页签就没了——这正是不想用前端时的做法</td></tr>
+      <tr><td><code>features.mirror</code> / <code>codebaseMap</code> / <code>worklog</code> / <code>consolidation</code></td><td>开</td><td>镜像 / 地图 / 工作日志 / 离线巩固</td></tr>
+      <tr><td><code>mcpServer.port</code></td><td>3140</td><td>MCP 监听端口</td></tr>
+      <tr><td><code>memory.recallMaxTokens</code></td><td>4096</td><td>单次检索的 token 预算（按层比例分配）</td></tr>
+      <tr><td><code>ingest.claude.pollMs</code></td><td>60000</td><td>摄取轮询间隔，Hub 数据的新鲜度上限</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section id="faq">
+  <h2><span class="no">08</span>疑难解答</h2>
+
+  <h3>Coherence 页签不见了</h3>
+  <p>按顺序查：① 会话是空白的——发条消息或切到有历史的会话；② 启停时停过 coherence 家族——去 插件包 页签重新启用；③ <code>features.webGateway</code> 被关了——打开它。</p>
+
+  <h3>Memory 计数是 0，但我明明写过</h3>
+  <p>确认写入走的是哪个分片。Hub 和 MCP 默认读 legacy 分片；多工作区场景写入的命名分片这里看不到。另外记忆条目若已是「已过时/已矛盾」，检索默认不会返回它们，但列表（全部/对应层）仍会列出。</p>
+
+  <h3>启动时报 "entry did not activate … waiting for service: remote.pluginControl"</h3>
+  <p>打包产物里的运行时闭包过期了（前端是新代码、闭包里的服务组装是旧版）。用当前仓库重新打包桌面端即可——构建脚本的 afterPack 钩子现在无条件按仓库源刷新工作区包，不会再出「旧但完整」的拷贝。</p>
+
+  <h3>把 coherence 停用后，设置页签还在吗</h3>
+  <p>在。插件包页签自身被设计为不可停用，随时可以进去把家族再打开。极端情况下也可以手工删掉 <code>~/.dsh/cordis.patch.yml</code> 里对应的行（或整个清成 <code>[]</code>）后重启内核。</p>
+
+  <h3>接入卡片一直是灰点</h3>
+  <p>对应来源的特性开关没开（<code>ingestOpencode</code> / <code>ingestCodex</code> 默认关），或者该工具的存储路径上还没有任何会话。Claude Code 开箱即摄——跑过就会有数。</p>
+</section>
+
+<footer>
+  <p>范围说明：本手册描述 coherence 前端 MVP（Agents + Memory 分区）及随附表面；Map / Worklog / Transcripts 分区、多工作区切换与前端写入操作在后续版本。数据契约以 <span class="mono">packages/memory/coherence/README.md</span> 为权威。</p>
+  <p class="mono">DSH · DeepSeek Harness — Coherence Suite</p>
+</footer>
+
+</main>
+</div>
+</body>
+</html>

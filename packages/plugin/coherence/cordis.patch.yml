@@ -1,0 +1,27 @@
+# The dsh-coherence bundle patch: mounts the dsh-coherence plugin on a
+# profile that already provides storage (the web profile mounts dsh-storage /
+# dsh-storage-json / dsh-storage-domain in web-app/cordis.patch.yml).
+#
+# The config is entirely optional — every field defaults. Override any tunable
+# below (e.g. `features.ingestOpencode: true`, `ingest.codex.pollMs: 30000`).
+# The invariant companion (`.../invariant`) is not mounted here; it registers
+# on the `invariants` service and is applied by test harnesses or a profile
+# that opts in.
+
+- insert:
+    - id: dsh-coherence
+      name: 'dsh-coherence'
+      config: {}
+
+    # Coherence browser halves, shipped with the package like a mod's client
+    # assets: the keyed `subagent` delegation card and the plugin-package
+    # grouped view in Plugins settings. The native web-app bundle carries no
+    # coherence roster — installing this package IS the frontend change.
+    - id: ui-coherence
+      name: 'dsh-client-ui-coherence'
+
+    - id: ui-coherence-inventory
+      name: 'dsh-client-ui-coherence-inventory'
+
+    - id: ui-coherence-hub
+      name: 'dsh-client-ui-coherence-hub'

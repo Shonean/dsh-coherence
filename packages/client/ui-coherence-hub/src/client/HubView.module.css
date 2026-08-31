@@ -1,0 +1,268 @@
+/* Coherence Hub view: dense information surface over coherence suite data. */
+
+.hub {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  padding: 16px 20px;
+  overflow-y: auto;
+}
+
+.sections {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--dsh-border, color-mix(in srgb, currentColor 12%, transparent));
+}
+
+.sectionTab {
+  appearance: none;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  opacity: 0.65;
+  padding: 6px 10px;
+}
+
+.sectionTab[aria-selected='true'] {
+  border-bottom-color: currentColor;
+  opacity: 1;
+}
+
+.sectionBody {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cardTitle {
+  font-size: 0.9em;
+  font-weight: 600;
+  margin: 4px 0 0;
+}
+
+.note {
+  color: inherit;
+  opacity: 0.7;
+  margin: 0;
+}
+
+.ingestGrid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.ingestCard {
+  border: 1px solid var(--dsh-border, color-mix(in srgb, currentColor 12%, transparent));
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+}
+
+.ingestHead {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.ingestName {
+  font-weight: 600;
+}
+
+.ingestMeta {
+  font-size: 0.85em;
+  opacity: 0.7;
+}
+
+.lineageList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lineageRow {
+  align-items: center;
+  border: 1px solid var(--dsh-border, color-mix(in srgb, currentColor 12%, transparent));
+  border-radius: 8px;
+  display: flex;
+  gap: 10px;
+  padding: 6px 10px;
+}
+
+.lineageLabel {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lineageMode {
+  font-size: 0.85em;
+  opacity: 0.7;
+}
+
+.layerTabs {
+  display: flex;
+  gap: 4px;
+}
+
+.layerTabs .sectionTab {
+  border-bottom: none;
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
+.layerTabs .sectionTab[aria-selected='true'] {
+  background: color-mix(in srgb, currentColor 10%, transparent);
+}
+
+.shardRow {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.shardLabel {
+  font-size: 0.85em;
+  opacity: 0.7;
+}
+
+.shardSelect {
+  background: none;
+  border: 1px solid var(--dsh-border, color-mix(in srgb, currentColor 20%, transparent));
+  border-radius: 8px;
+  color: inherit;
+  font: inherit;
+  max-width: 260px;
+  padding: 4px 8px;
+}
+
+.shardHint {
+  color: var(--dsh-muted, color-mix(in srgb, currentColor 55%, transparent));
+  flex-basis: 100%;
+  font-size: 0.8em;
+}
+
+.searchRow {
+  display: flex;
+  gap: 8px;
+}
+
+.delegateForm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+  max-width: 560px;
+}
+
+.delegatePrompt {
+  resize: vertical;
+}
+
+.searchInput {
+  background: none;
+  border: 1px solid var(--dsh-border, color-mix(in srgb, currentColor 20%, transparent));
+  border-radius: 8px;
+  color: inherit;
+  flex: 1;
+  font: inherit;
+  padding: 6px 10px;
+}
+
+.searchButton {
+  background: none;
+  border: 1px solid var(--dsh-border, color-mix(in srgb, currentColor 20%, transparent));
+  border-radius: 8px;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  padding: 6px 14px;
+}
+
+.memoryList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.memoryRow {
+  border: 1px solid var(--dsh-border, color-mix(in srgb, currentColor 12%, transparent));
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+}
+
+.memoryHead {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.8em;
+  gap: 8px;
+}
+
+.layerChip,
+.stateChip,
+.agentChip,
+.tag {
+  border: 1px solid var(--dsh-border, color-mix(in srgb, currentColor 16%, transparent));
+  border-radius: 999px;
+  opacity: 0.85;
+  padding: 1px 8px;
+}
+
+.importance {
+  opacity: 0.7;
+}
+
+.memorySubject {
+  font-weight: 600;
+}
+
+.memoryText {
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.tagRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.placeholder {
+  border: 1px dashed var(--dsh-border, color-mix(in srgb, currentColor 20%, transparent));
+  border-radius: 8px;
+  opacity: 0.7;
+  padding: 24px;
+  text-align: center;
+}
+
+.linkButton {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  opacity: 0.8;
+  padding: 0;
+  text-decoration: underline;
+  align-self: flex-start;
+}

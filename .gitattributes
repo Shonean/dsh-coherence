@@ -1,0 +1,4 @@
+# Line endings: normalize text files to LF in the repository and on checkout,
+# so CI (Linux checkouts) and local Windows checkouts hash identically in the
+# README.i18n.yaml translation-pair records.
+* text=auto eol=lf

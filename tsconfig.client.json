@@ -1,0 +1,8 @@
+{
+  "files": [],
+  "references": [
+    { "path": "packages/client/ui-coherence" },
+    { "path": "packages/client/ui-coherence-hub" },
+    { "path": "packages/client/ui-coherence-inventory" }
+  ]
+}
