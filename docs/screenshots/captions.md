@@ -1,20 +1,13 @@
-# Showcase screenshots (synthetic sandbox)
+# Showcase screenshots (real desktop captures)
 
-Three composed screenshots of the dsh-coherence UI, rendered from
-[`sandbox-demo.html`](sandbox-demo.html) — a self-contained synthetic sandbox
-with clearly fictional demo data (project "acme-sandbox"). Use them for the
-open-source showcase; they are demo content, not captures of a live session.
+Captures of the coherence suite running in the packaged dsh desktop app
+(2026-09-01): the Coherence Hub over live multi-agent data, and the
+package-grouped plugin inventory. No synthetic data, no mock — the ingest
+counts and memory records are the machine's own.
 
 | File | What it shows |
 |---|---|
-| `coherence-hub.png` | The **Coherence Hub** view — external-agent ingest cards (claude code / opencode / codex), live subagent lineage, and the three-layer memory counts. |
-| `coherence-memory.png` | The **Memory** section — workspace shard selector, keyword recall, and working / episodic / semantic rows. |
-| `plugin-pack-inventory.png` | The package-grouped **plugin inventory** tab (Web Plugins → 插件包) — the coherence family as one toggleable plugin pack. |
-
-## Re-render
-
-The HTML is the source of truth; the PNGs are derived 2× renders (made with
-the playwright `chromium` from the dev machine's playwright cache — the repo
-intentionally carries no browser dependency). To regenerate, open
-`sandbox-demo.html` in any browser and screenshot each `#view-*` section, or
-replay the same headless-chromium render used to produce them.
+| `coherence-hub.png` | The **Coherence Hub** tab inside a conversation — external-agent ingest cards (claude code / opencode / codex with live message counts and last-active), the subagent-lineage section, and the docked composer beneath the view on a brand-new session. |
+| `coherence-memory.png` | The Hub's **记忆 (memory)** section — workspace shard selector, layer tabs (全部 / 工作 / 情节 / 语义), semantic recall, and real memory records. |
+| `plugin-pack-inventory.png` | Settings → 插件 → 插件包 — the coherence family as one toggleable plugin pack (coherence + three browser halves, all enabled). |
+| `view-ring.png` | A brand-new session: the view ring (对话 / 轨迹 / Coherence) reachable from the landing state, hero untouched. |
