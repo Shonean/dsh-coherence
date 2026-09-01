@@ -59,8 +59,8 @@ export function startConsolidationJob(
 }
 
 /**
- * Run one consolidation, through a job when the registry is composed, directly
- * otherwise.
+ * Run one consolidation, through a job when the registry serves this context,
+ * directly otherwise.
  * @param ctx - plugin context.
  * @param memory - the memory service.
  * @returns resolution after consolidation settles.
@@ -68,8 +68,15 @@ export function startConsolidationJob(
 export function runConsolidation(ctx: Context, memory: MemoryService): Promise<void> {
   const jobs = ctx.get('jobs')
   if (jobs !== undefined) {
-    startConsolidationJob(jobs, memory)
-    return Promise.resolve()
+    try {
+      startConsolidationJob(jobs, memory)
+      return Promise.resolve()
+    } catch {
+      // A composed-but-unserved registry (an owner agent whose composition
+      // loads no job controller) rejects `start()`; the consolidation itself
+      // must still run, so degrade to the direct call the no-registry path
+      // uses.
+    }
   }
   return memory.consolidateAll().then(() => {})
 }

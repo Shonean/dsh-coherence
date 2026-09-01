@@ -10,6 +10,7 @@ import Storage from '@deepseek-ai/dsh-storage'
 import * as StorageJson from '@deepseek-ai/dsh-storage-json'
 import * as StorageDomain from '@deepseek-ai/dsh-storage-domain'
 import { MemoryService } from '../src/index.ts'
+import { runConsolidation } from '../src/service/consolidation.ts'
 
 let root: string | undefined
 let context: Context | undefined
@@ -60,6 +61,19 @@ describe('memory consolidation', () => {
     expect(report.episodesConsolidated).toBe(2)
     expect(report.claimsAdded).toBe(1)
     expect(report.claimsMerged).toBe(1)
+    expect(ctx.memory.stats().semantic).toBe(1)
+  })
+
+  it('falls back to a direct consolidation when the composed registry rejects the job start', async () => {
+    const ctx = await setup()
+    await ctx.memory.write({ layer: 'episodic', content: 'claude fixed the ingest bug', agentType: 'claude-code', importance: 0.7 })
+    // A composed-but-unserved registry: the desktop root agent carries the
+    // jobs service without a job controller in its own composition.
+    const rejectingRegistry = {
+      start: () => { throw new Error('background jobs unavailable: no job controller serves this agent') },
+    }
+    const ctxWithJobs = { get: (key: string) => (key === 'jobs' ? rejectingRegistry : undefined) } as unknown as Context
+    await runConsolidation(ctxWithJobs, ctx.memory)
     expect(ctx.memory.stats().semantic).toBe(1)
   })
 })
