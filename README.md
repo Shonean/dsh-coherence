@@ -34,6 +34,10 @@ From a dsh profile that already mounts storage (the `web` profile does):
 dsh plugin --profile <name> add dsh-coherence
 ```
 
+## Showcase
+
+**[Show Your Plugins! — dsh-coherence](https://github.com/deepseek-ai/deepseek-harness/discussions/5364)** — the bilingual announcement post on the dsh repository, with real desktop captures under [`docs/screenshots/`](docs/screenshots/captions.md).
+
 ## Development
 
 From a repository checkout:

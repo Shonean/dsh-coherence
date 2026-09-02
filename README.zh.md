@@ -34,6 +34,10 @@
 dsh plugin --profile <name> add dsh-coherence
 ```
 
+## 展示
+
+**[Show Your Plugins! — dsh-coherence](https://github.com/deepseek-ai/deepseek-harness/discussions/5364)** —— 发布在 dsh 官方仓库的中英双语介绍帖，实拍截图见 [`docs/screenshots/`](docs/screenshots/captions.md)。
+
 ## 开发
 
 从仓库检出开始：

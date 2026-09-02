@@ -1,8 +1,10 @@
 # Show Your Plugins! — dsh-coherence
 
-_Final draft (2026-09-01). Bilingual post for the dsh plugin showcase
-("Show Your Plugins!" category). Companion screenshots: `docs/screenshots/`
-(C1) — real captures from the packaged desktop._
+_Posted 2026-09-01 as
+[discussion #5364](https://github.com/deepseek-ai/deepseek-harness/discussions/5364)
+in the official repository's "Show Your Plugins!" category. Companion
+screenshots: `docs/screenshots/` (C1) — real captures from the packaged
+desktop._
 
 ---
 
